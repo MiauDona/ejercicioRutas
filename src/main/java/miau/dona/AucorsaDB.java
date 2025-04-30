@@ -4,13 +4,13 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class AucorsaDB {
-    Connection connection;
-    Statement statement;
+    static Connection connection;
+    static Statement statement;
 
     public AucorsaDB(Connection connection, Statement statement) throws SQLException {
         CreateDBSchema.createTables(statement);
-        this.connection = connection;
-        this.statement = statement;
+        AucorsaDB.connection = connection;
+        AucorsaDB.statement = statement;
     }
 
     public void mostrarDatosTabla(String table) throws SQLException {
@@ -65,14 +65,12 @@ public class AucorsaDB {
     // Es la tabla BDP
     public void insertRoute(String register, int numdriver, int idplace, String dayWeek) throws SQLException {
         String sql = dataInsertion("BDP", "register, numdriver, idplace, day_of_week", "?, ?, ?, ?");
-        PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
         preparedStatement.setString(1, register);
         preparedStatement.setInt(2, numdriver);
         preparedStatement.setInt(3, idplace);
         preparedStatement.setString(4, dayWeek);
-
-
 
         preparedStatement.executeUpdate();
     }
